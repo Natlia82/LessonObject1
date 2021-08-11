@@ -1,33 +1,32 @@
 //var obj = { name: 'мечник', health: 10, level: 2, attack: 80, defence: 40 };
 
-function orderByProps(obje, mass) {
+export default function orderByProps(obje, mass) {
     let newObject = [];
     for (let i = 0; i < mass.length; i++) {
         newObject[i] = { key: mass[i], value: obje[mass[i]] };
         delete obje[mass[i]];
+
     }
 
-    const j = newObject.length;
 
-    let k = null;
-    do {
-
-        k = null;
-        for (const prot in obje) {
-            if (!k) {
-                k = prot;
-            }
-            if (k > prot) {
-                k = prot;
-            }
+    let countObj = Object.keys(obje).sort(function(a, b) {
+        if (a >= b) {
+            return 1;
         }
-        newObject[j] = { key: k, value: obje[k] };
-        delete obje[k];
-        j++;
+        if (a < b) {
+            return -1;
+        }
 
-    } while (Object.keys(obje).length > 0)
+    });
+
+    let j = newObject.length;
+    for (let i = 0; i < countObj.length; i++) {
+        newObject[j] = { key: countObj[i], value: obje[countObj[i]] };
+        j++;
+    }
 
     return newObject;
 };
 
-//orderByProps(obj, ["name", "level"]);
+//orderByProps(obj, ["name", "level"])
+//console.log(orderByProps(obj, ["name", "level"]));
